@@ -214,38 +214,38 @@ class TestTuruSnowflakeAsyncConnection:
 
     @pytest.mark.asyncio
     async def test_cursor_use_warehouse(self, async_connection: AsyncConnection):
-        async with await (
-            (await async_connection.cursor())
+        async with (
+            await (await async_connection.cursor())
             .use_warehouse(os.environ["SNOWFLAKE_WAREHOUSE"])
-            .execute_map(Row, "select 1")
-        ) as cursor:
+            .execute_map(Row, "select 1") as cursor
+        ):
             assert await cursor.fetchone() == Row(1)
 
     @pytest.mark.asyncio
     async def test_cursor_use_schema(self, async_connection: AsyncConnection):
-        async with await (
-            (await async_connection.cursor())
+        async with (
+            await (await async_connection.cursor())
             .use_schema(os.environ["SNOWFLAKE_SCHEMA"])
-            .execute_map(Row, "select 1")
-        ) as cursor:
+            .execute_map(Row, "select 1") as cursor
+        ):
             assert await cursor.fetchone() == Row(1)
 
     @pytest.mark.asyncio
     async def test_cursor_use_database(self, async_connection: AsyncConnection):
-        async with await (
-            (await async_connection.cursor())
+        async with (
+            await (await async_connection.cursor())
             .use_database(os.environ["SNOWFLAKE_DATABASE"])
-            .execute_map(Row, "select 1")
-        ) as cursor:
+            .execute_map(Row, "select 1") as cursor
+        ):
             assert await cursor.fetchone() == Row(1)
 
     @pytest.mark.asyncio
     async def test_cursor_use_role(self, async_connection: AsyncConnection):
-        async with await (
-            (await async_connection.cursor())
+        async with (
+            await (await async_connection.cursor())
             .use_role(os.environ["SNOWFLAKE_ROLE"])
-            .execute_map(Row, "select 1")
-        ) as cursor:
+            .execute_map(Row, "select 1") as cursor
+        ):
             assert await cursor.fetchone() == Row(1)
 
     @pytest.mark.skipif(

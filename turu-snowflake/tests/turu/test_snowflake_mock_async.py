@@ -237,14 +237,14 @@ class TestTuruSnowflakeMockAsyncConnection:
     ):
         expected = [Row(1)]
         mock_async_connection.inject_response(Row, expected)
-        async with await (
-            (await mock_async_connection.cursor())
+        async with (
+            await (await mock_async_connection.cursor())
             .use_warehouse("test_warehouse")
             .execute_map(
                 Row,
                 "select 1",
-            )
-        ) as cursor:
+            ) as cursor
+        ):
             assert await cursor.fetchmany() == expected
 
     @pytest.mark.asyncio
@@ -253,42 +253,42 @@ class TestTuruSnowflakeMockAsyncConnection:
     ):
         expected = [Row(1)]
         mock_async_connection.inject_response(Row, expected)
-        async with await (
-            (await mock_async_connection.cursor())
+        async with (
+            await (await mock_async_connection.cursor())
             .use_database("test_database")
             .execute_map(
                 Row,
                 "select 1",
-            )
-        ) as cursor:
+            ) as cursor
+        ):
             assert await cursor.fetchmany() == expected
 
     @pytest.mark.asyncio
     async def test_cursor_use_schema(self, mock_async_connection: MockAsyncConnection):
         expected = [Row(1)]
         mock_async_connection.inject_response(Row, expected)
-        async with await (
-            (await mock_async_connection.cursor())
+        async with (
+            await (await mock_async_connection.cursor())
             .use_schema("test_schema")
             .execute_map(
                 Row,
                 "select 1",
-            )
-        ) as cursor:
+            ) as cursor
+        ):
             assert await cursor.fetchmany() == expected
 
     @pytest.mark.asyncio
     async def test_cursor_use_role(self, mock_async_connection: MockAsyncConnection):
         expected = [Row(1)]
         mock_async_connection.inject_response(Row, expected)
-        async with await (
-            (await mock_async_connection.cursor())
+        async with (
+            await (await mock_async_connection.cursor())
             .use_role("test_role")
             .execute_map(
                 Row,
                 "select 1",
-            )
-        ) as cursor:
+            ) as cursor
+        ):
             assert await cursor.fetchmany() == expected
 
     @pytest.mark.skipif(
