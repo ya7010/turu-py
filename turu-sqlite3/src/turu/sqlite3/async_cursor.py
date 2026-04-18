@@ -1,4 +1,4 @@
-from typing import Any, Iterator, List, Optional, Sequence, Tuple, Type, cast
+from typing import Any, Iterator, List, Optional, Sequence, Type, cast
 
 import aiosqlite
 import turu.core.async_cursor
@@ -42,7 +42,7 @@ class AsyncCursor(
     @override
     async def execute(
         self, operation: str, parameters: Optional["Iterator[Any]"] = None, /
-    ) -> "AsyncCursor[Tuple[Any]]":
+    ) -> "AsyncCursor[tuple[Any, ...]]":
         await self._raw_cursor.execute(operation, parameters)
         self._row_type = None
 
@@ -51,7 +51,7 @@ class AsyncCursor(
     @override
     async def executemany(
         self, operation: str, seq_of_parameters: "Sequence[Iterator[Any]]", /
-    ) -> "AsyncCursor[Tuple[Any]]":
+    ) -> "AsyncCursor[tuple[Any, ...]]":
         await self._raw_cursor.executemany(operation, seq_of_parameters)
         self._row_type = None
 

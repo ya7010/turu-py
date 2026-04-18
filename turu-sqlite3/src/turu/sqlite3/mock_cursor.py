@@ -1,16 +1,16 @@
-from typing import TYPE_CHECKING
+from typing import Any, Mapping, Sequence, Union
 
 import turu.core.cursor
 import turu.core.mock
+from typing_extensions import TypeAlias
 
 from .cursor import Cursor
 
-if TYPE_CHECKING:
-    from .cursor import _Parameters  # noqa: F401
+SQLiteParameters: TypeAlias = Union[Sequence[Any], Mapping[str, Any]]
 
 
 class MockCursor(  # type: ignore
-    turu.core.mock.MockCursor[turu.core.cursor.GenericRowType, "_Parameters"],
+    turu.core.mock.MockCursor[turu.core.cursor.GenericRowType, SQLiteParameters],
     Cursor[turu.core.cursor.GenericRowType],
 ):
     pass

@@ -76,13 +76,14 @@ class TestTuruSnowflake:
     def test_execute_map_pandera_type(self, connection: Connection):
         import pandera as pa  # type: ignore[import]
 
-        from turu.snowflake.features import PanderaDataFrame
+        from turu.snowflake.features import PanderaDataFrame, PanderaDataFrameModel
 
-        class RowModel(pa.DataFrameModel):
+        class RowModel(PanderaDataFrameModel):
             ID: pa.Int8
 
-        _cursor: turu.snowflake.Cursor[Never, PanderaDataFrame[RowModel], Never] = (
-            connection.execute_map(RowModel, "select 1 as ID")
+        _cursor = cast(
+            turu.snowflake.Cursor[Never, PanderaDataFrame[RowModel], Never],
+            connection.execute_map(RowModel, "select 1 as ID"),
         )
 
     def test_execute_map_fetchone(self, connection: Connection):
@@ -176,27 +177,35 @@ class TestTuruSnowflake:
             assert cursor.fetchone() is None
 
     def test_cursor_use_warehouse(self, connection: Connection):
-        with connection.cursor().use_warehouse(
-            os.environ["SNOWFLAKE_WAREHOUSE"]
-        ).execute_map(Row, "select 1") as cursor:
+        with (
+            connection.cursor()
+            .use_warehouse(os.environ["SNOWFLAKE_WAREHOUSE"])
+            .execute_map(Row, "select 1") as cursor
+        ):
             assert cursor.fetchone() == Row(1)
 
     def test_cursor_use_schema(self, connection: Connection):
-        with connection.cursor().use_schema(os.environ["SNOWFLAKE_SCHEMA"]).execute_map(
-            Row, "select 1"
-        ) as cursor:
+        with (
+            connection.cursor()
+            .use_schema(os.environ["SNOWFLAKE_SCHEMA"])
+            .execute_map(Row, "select 1") as cursor
+        ):
             assert cursor.fetchone() == Row(1)
 
     def test_cursor_use_database(self, connection: Connection):
-        with connection.cursor().use_database(
-            os.environ["SNOWFLAKE_DATABASE"]
-        ).execute_map(Row, "select 1") as cursor:
+        with (
+            connection.cursor()
+            .use_database(os.environ["SNOWFLAKE_DATABASE"])
+            .execute_map(Row, "select 1") as cursor
+        ):
             assert cursor.fetchone() == Row(1)
 
     def test_cursor_use_role(self, connection: Connection):
-        with connection.cursor().use_role(os.environ["SNOWFLAKE_ROLE"]).execute_map(
-            Row, "select 1"
-        ) as cursor:
+        with (
+            connection.cursor()
+            .use_role(os.environ["SNOWFLAKE_ROLE"])
+            .execute_map(Row, "select 1") as cursor
+        ):
             assert cursor.fetchone() == Row(1)
 
     @pytest.mark.skipif(

@@ -30,7 +30,7 @@ class AsyncRecordCursor(  # type: ignore[override]
                 header=self._recorder._options.get("header", True),
             )
 
-        return df
+        return cast(GenericPandasDataFrame, df)
 
     async def fetch_pandas_batches(
         self, **kwargs
@@ -40,14 +40,14 @@ class AsyncRecordCursor(  # type: ignore[override]
         if isinstance(self._recorder, turu.core.record.CsvRecorder):
             if limit := self._recorder._options.get("limit"):
                 async for batch in batches:
-                    yield batch.head(limit)
+                    yield cast(GenericPandasDataFrame, batch.head(limit))
 
                     limit -= len(batch)
                     if limit <= 0:
                         return
 
         async for batch in batches:
-            yield batch
+            yield cast(GenericPandasDataFrame, batch)
 
     async def fetch_arrow_all(self) -> GenericPyArrowTable:
         table = await self.__sf_cursor.fetch_arrow_all()
@@ -62,7 +62,7 @@ class AsyncRecordCursor(  # type: ignore[override]
                 header=self._recorder._options.get("header", True),
             )
 
-        return table
+        return cast(GenericPyArrowTable, table)
 
     async def fetch_arrow_batches(self) -> AsyncIterator[GenericPyArrowTable]:
         batches = self.__sf_cursor.fetch_arrow_batches()
@@ -70,14 +70,14 @@ class AsyncRecordCursor(  # type: ignore[override]
         if isinstance(self._recorder, turu.core.record.CsvRecorder):
             if limit := self._recorder._options.get("limit"):
                 async for batch in batches:
-                    yield batch.slice(0, limit)
+                    yield cast(GenericPyArrowTable, batch.slice(0, limit))
 
                     limit -= len(batch)
                     if limit <= 0:
                         return
 
         async for batch in batches:
-            yield batch
+            yield cast(GenericPyArrowTable, batch)
 
     @property
     def __sf_cursor(

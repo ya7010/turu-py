@@ -1,5 +1,5 @@
 import os
-from typing import Any, Callable, Dict, Optional, Type, Union
+from typing import Any, Callable, Dict, Optional, Type, Union, cast
 
 import pymysql
 import turu.core.connection
@@ -26,7 +26,7 @@ class Connection(turu.core.connection.Connection):
         **kwargs: Unpack["_ConnectParams"],
     ) -> Self:
         return cls(
-            pymysql.connect(
+            cast(Any, pymysql.connect)(
                 user=user,
                 password=password,
                 host=host,
@@ -79,12 +79,12 @@ class _ConnectParams(TypedDict, total=False):
     collation: Optional[Any]
     sql_mode: Optional[str]
     read_default_file: Optional[str]
-    conv: Dict[int, Callable[[Union[str, bytes]], Any]]
-    use_unicode: Optional[bool]
+    conv: Dict[Union[int, Type[Any]], Callable[[Union[str, bytes]], Any]]
+    use_unicode: bool
     client_flag: int
-    cursorclass: Type[Cursor]
+    cursorclass: Type[Any]
     init_command: Optional[str]
-    connect_timeout: Optional[int]
+    connect_timeout: float
     read_default_group: Optional[str]
     autocommit: bool
     local_infile: bool

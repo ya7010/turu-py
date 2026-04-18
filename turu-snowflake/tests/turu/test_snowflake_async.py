@@ -79,14 +79,15 @@ class TestTuruSnowflakeAsyncConnection:
     async def test_execute_map_pandera_type(self, async_connection: AsyncConnection):
         import pandera as pa  # type: ignore[import]
 
-        from turu.snowflake.features import PanderaDataFrame
+        from turu.snowflake.features import PanderaDataFrame, PanderaDataFrameModel
 
-        class RowModel(pa.DataFrameModel):
+        class RowModel(PanderaDataFrameModel):
             ID: pa.Int8
 
-        _cursor: turu.snowflake.AsyncCursor[
-            Never, PanderaDataFrame[RowModel], Never
-        ] = await async_connection.execute_map(RowModel, "select 1 as ID")
+        _cursor = cast(
+            turu.snowflake.AsyncCursor[Never, PanderaDataFrame[RowModel], Never],
+            await async_connection.execute_map(RowModel, "select 1 as ID"),
+        )
 
     @pytest.mark.asyncio
     async def test_execute_fetchone(self, async_connection: AsyncConnection):
@@ -214,38 +215,38 @@ class TestTuruSnowflakeAsyncConnection:
 
     @pytest.mark.asyncio
     async def test_cursor_use_warehouse(self, async_connection: AsyncConnection):
-        async with await (
-            (await async_connection.cursor())
+        async with (
+            await (await async_connection.cursor())
             .use_warehouse(os.environ["SNOWFLAKE_WAREHOUSE"])
-            .execute_map(Row, "select 1")
-        ) as cursor:
+            .execute_map(Row, "select 1") as cursor
+        ):
             assert await cursor.fetchone() == Row(1)
 
     @pytest.mark.asyncio
     async def test_cursor_use_schema(self, async_connection: AsyncConnection):
-        async with await (
-            (await async_connection.cursor())
+        async with (
+            await (await async_connection.cursor())
             .use_schema(os.environ["SNOWFLAKE_SCHEMA"])
-            .execute_map(Row, "select 1")
-        ) as cursor:
+            .execute_map(Row, "select 1") as cursor
+        ):
             assert await cursor.fetchone() == Row(1)
 
     @pytest.mark.asyncio
     async def test_cursor_use_database(self, async_connection: AsyncConnection):
-        async with await (
-            (await async_connection.cursor())
+        async with (
+            await (await async_connection.cursor())
             .use_database(os.environ["SNOWFLAKE_DATABASE"])
-            .execute_map(Row, "select 1")
-        ) as cursor:
+            .execute_map(Row, "select 1") as cursor
+        ):
             assert await cursor.fetchone() == Row(1)
 
     @pytest.mark.asyncio
     async def test_cursor_use_role(self, async_connection: AsyncConnection):
-        async with await (
-            (await async_connection.cursor())
+        async with (
+            await (await async_connection.cursor())
             .use_role(os.environ["SNOWFLAKE_ROLE"])
-            .execute_map(Row, "select 1")
-        ) as cursor:
+            .execute_map(Row, "select 1") as cursor
+        ):
             assert await cursor.fetchone() == Row(1)
 
     @pytest.mark.skipif(

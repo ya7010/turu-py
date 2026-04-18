@@ -103,7 +103,10 @@ class MockAsyncConnection(turu.core.async_connection.AsyncConnection):
 
             response = [map_row(row_type, row) for row in reader]
 
-        self.inject_response(row_type, response)
+        if row_type is None:
+            self.inject_response(None, response)
+        else:
+            self.inject_response(row_type, response)
 
         return self
 

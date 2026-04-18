@@ -3,7 +3,6 @@ from typing import (
     List,
     Optional,
     Sequence,
-    Tuple,
     Type,
     cast,
 )
@@ -52,7 +51,7 @@ class AsyncCursor(
     @override
     async def execute(
         self, operation: str, parameters: Optional[Parameters] = None, /
-    ) -> "AsyncCursor[Tuple[Any]]":
+    ) -> "AsyncCursor[tuple[Any, ...]]":
         await self._raw_cursor.execute(cast(LiteralString, operation), parameters)
         self._row_type = None
 
@@ -61,7 +60,7 @@ class AsyncCursor(
     @override
     async def executemany(
         self, operation: str, seq_of_parameters: Sequence[Parameters], /
-    ) -> "AsyncCursor[Tuple[Any]]":
+    ) -> "AsyncCursor[tuple[Any, ...]]":
         await self._raw_cursor.executemany(
             cast(LiteralString, operation), seq_of_parameters
         )

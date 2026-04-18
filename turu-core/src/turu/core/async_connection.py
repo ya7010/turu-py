@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Any, Optional, Sequence, Tuple, Type
+from typing import Any, Optional, Sequence, Type
 
 import turu.core.async_cursor
 from turu.core.protocols.async_connection import AsyncConnectionProtocol
@@ -37,7 +37,7 @@ class AsyncConnection(AsyncConnectionProtocol):
         operation: str,
         parameters: Optional[Parameters] = None,
         /,
-    ) -> turu.core.async_cursor.AsyncCursor[Tuple[Any], Parameters]:
+    ) -> turu.core.async_cursor.AsyncCursor[tuple[Any, ...], Parameters]:
         """Prepare and execute a database operation (query or command).
 
         This is not defined in [PEP 249](https://peps.python.org/pep-0249/),
@@ -58,7 +58,7 @@ class AsyncConnection(AsyncConnectionProtocol):
         operation: str,
         seq_of_parameters: Sequence[Parameters],
         /,
-    ) -> turu.core.async_cursor.AsyncCursor[Tuple[Any], Parameters]:
+    ) -> turu.core.async_cursor.AsyncCursor[tuple[Any, ...], Parameters]:
         """Prepare a database operation (query or command)
         and then execute it against all parameter sequences or mappings.
 

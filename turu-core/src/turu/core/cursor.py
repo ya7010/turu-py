@@ -7,7 +7,6 @@ from typing import (
     List,
     Optional,
     Sequence,
-    Tuple,
     Type,
     TypeVar,
     Union,
@@ -20,7 +19,7 @@ from turu.core.protocols.cursor import CursorProtocol, Parameters
 from turu.core.protocols.dataclass import Dataclass
 from typing_extensions import Never, Self, override
 
-RowType = Union[Tuple[Any], Dataclass, PydanticModel]
+RowType = Union[tuple[Any, ...], Dataclass, PydanticModel]
 GenericRowType = TypeVar("GenericRowType", bound=RowType)
 GenericNewRowType = TypeVar("GenericNewRowType", bound=RowType)
 
@@ -144,11 +143,11 @@ class Cursor(Generic[GenericRowType, Parameters], CursorProtocol[Parameters]):
     def __next__(self) -> GenericRowType: ...
 
     @override
-    def __enter__(self):
+    def __enter__(self) -> "Cursor[GenericRowType, Parameters]":
         return self
 
     @override
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
         self.close()
 
 

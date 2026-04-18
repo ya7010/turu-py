@@ -2,7 +2,7 @@ import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from textwrap import dedent
-from typing import NamedTuple
+from typing import NamedTuple, cast
 
 import pytest
 from typing_extensions import Never
@@ -83,15 +83,16 @@ class TestTuruSnowflakeMockConnection:
         import pandas as pd  # type: ignore[import]
         import pandera as pa  # type: ignore[import]
 
-        from turu.snowflake.features import PanderaDataFrame
+        from turu.snowflake.features import PanderaDataFrame, PanderaDataFrameModel
 
-        class RowModel(pa.DataFrameModel):
+        class RowModel(PanderaDataFrameModel):
             ID: pa.Int8
 
-        _cursor: turu.snowflake.Cursor[Never, PanderaDataFrame[RowModel], Never] = (
+        _cursor = cast(
+            turu.snowflake.Cursor[Never, PanderaDataFrame[RowModel], Never],
             mock_connection.inject_response(
                 RowModel, pd.DataFrame({"id": [1]})
-            ).execute_map(RowModel, "select 1 as ID")
+            ).execute_map(RowModel, "select 1 as ID"),
         )
 
     def test_execute_map_fetchone(self, mock_connection: MockConnection):
@@ -194,37 +195,53 @@ class TestTuruSnowflakeMockConnection:
     def test_cursor_use_warehouse(self, mock_connection: MockConnection):
         expected = [Row(1)]
         mock_connection.inject_response(Row, expected)
-        with mock_connection.cursor().use_warehouse("test_warehouse").execute_map(
-            Row,
-            "select 1",
-        ) as cursor:
+        with (
+            mock_connection.cursor()
+            .use_warehouse("test_warehouse")
+            .execute_map(
+                Row,
+                "select 1",
+            ) as cursor
+        ):
             assert cursor.fetchmany() == expected
 
     def test_cursor_use_database(self, mock_connection: MockConnection):
         expected = [Row(1)]
         mock_connection.inject_response(Row, expected)
-        with mock_connection.cursor().use_database("test_database").execute_map(
-            Row,
-            "select 1",
-        ) as cursor:
+        with (
+            mock_connection.cursor()
+            .use_database("test_database")
+            .execute_map(
+                Row,
+                "select 1",
+            ) as cursor
+        ):
             assert cursor.fetchmany() == expected
 
     def test_cursor_use_schema(self, mock_connection: MockConnection):
         expected = [Row(1)]
         mock_connection.inject_response(Row, expected)
-        with mock_connection.cursor().use_schema("test_schema").execute_map(
-            Row,
-            "select 1",
-        ) as cursor:
+        with (
+            mock_connection.cursor()
+            .use_schema("test_schema")
+            .execute_map(
+                Row,
+                "select 1",
+            ) as cursor
+        ):
             assert cursor.fetchmany() == expected
 
     def test_cursor_use_role(self, mock_connection: MockConnection):
         expected = [Row(1)]
         mock_connection.inject_response(Row, expected)
-        with mock_connection.cursor().use_role("test_role").execute_map(
-            Row,
-            "select 1",
-        ) as cursor:
+        with (
+            mock_connection.cursor()
+            .use_role("test_role")
+            .execute_map(
+                Row,
+                "select 1",
+            ) as cursor
+        ):
             assert cursor.fetchmany() == expected
 
     @pytest.mark.skipif(
