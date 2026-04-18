@@ -1,20 +1,20 @@
 # Turu: Simple Database Client for Typed Python
 
 <!-- --8<-- [start:badges] -->
-[![docs](https://github.com/yassun7010/turu-py/actions/workflows/publish-mkdocs.yml/badge.svg)](https://yassun7010.github.io/turu-py/)
-[![test](https://github.com/yassun7010/turu-py/actions/workflows/test-suite.yml/badge.svg)](https://github.com/yassun7010/turu-py/actions)
+[![docs](https://github.com/ya7010/turu-py/actions/workflows/publish-mkdocs.yml/badge.svg)](https://ya7010.github.io/turu-py/)
+[![test](https://github.com/ya7010/turu-py/actions/workflows/test-suite.yml/badge.svg)](https://github.com/ya7010/turu-py/actions)
 [![pypi package](https://badge.fury.io/py/turu.svg)](https://pypi.org/project/turu)
 <!-- --8<-- [end:badges] -->
 
 <p align="center">
-    <img alt="logo" src="https://raw.githubusercontent.com/yassun7010/turu-py/main/docs/images/logo.svg" width="300" />
+    <img alt="logo" src="https://raw.githubusercontent.com/ya7010/turu-py/main/docs/images/logo.svg" width="300" />
 </p>
 
 ---
 
-**Documentation**: <a href="https://yassun7010.github.io/turu-py/" target="_blank">https://yassun7010.github.io/turu-py/</a>
+**Documentation**: <a href="https://ya7010.github.io/turu-py/" target="_blank">https://ya7010.github.io/turu-py/</a>
 
-**Source Code**: <a href="https://github.com/yassun7010/turu-py" target="_blank">https://github.com/yassun7010/turu-py</a>
+**Source Code**: <a href="https://github.com/ya7010/turu-py" target="_blank">https://github.com/ya7010/turu-py</a>
 
 ---
 
