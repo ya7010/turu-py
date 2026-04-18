@@ -12,8 +12,10 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/setup-python@v3
+    - uses: actions/setup-python@v5
     - uses: snok/install-poetry@v1
+      with:
+        version: 2.2.1
     - name: Check Poetry Version
       shell: bash
       run: poetry --version

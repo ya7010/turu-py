@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Any, Optional, Sequence, Tuple, Type
+from typing import Any, Optional, Sequence, Type
 
 from typing_extensions import Never, Self, override
 
@@ -42,7 +42,7 @@ class Connection(ConnectionProtocol):
         operation: str,
         parameters: Optional[Parameters] = None,
         /,
-    ) -> turu.core.cursor.Cursor[Tuple[Any], Parameters]:
+    ) -> turu.core.cursor.Cursor[tuple[Any, ...], Parameters]:
         """Prepare and execute a database operation (query or command).
 
         This is not defined in [PEP 249](https://peps.python.org/pep-0249/),
@@ -63,7 +63,7 @@ class Connection(ConnectionProtocol):
         operation: str,
         seq_of_parameters: Sequence[Parameters],
         /,
-    ) -> turu.core.cursor.Cursor[Tuple[Any], Parameters]:
+    ) -> turu.core.cursor.Cursor[tuple[Any, ...], Parameters]:
         """Prepare a database operation (query or command)
         and then execute it against all parameter sequences or mappings.
 

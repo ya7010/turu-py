@@ -1,5 +1,5 @@
 import sqlite3
-from typing import Any, Optional, Type, Union
+from typing import Any, Literal, Optional, Type, Union, cast
 
 import turu.core.connection
 import turu.core.mock
@@ -20,7 +20,7 @@ class Connection(turu.core.connection.Connection):
         database: Union[str, bytes],
         **kwargs: Unpack["_ConnectArgs"],
     ) -> Self:
-        return cls(sqlite3.Connection(database, **kwargs))
+        return cls(cast(Any, sqlite3.connect)(database, **kwargs))
 
     @override
     @classmethod
@@ -47,7 +47,9 @@ class Connection(turu.core.connection.Connection):
 class _ConnectArgs(TypedDict):
     timeout: NotRequired[float]
     detect_types: NotRequired[int]
-    isolation_level: NotRequired[Optional[str]]
+    isolation_level: NotRequired[
+        Optional[Literal["DEFERRED", "IMMEDIATE", "EXCLUSIVE"]]
+    ]
     check_same_thread: NotRequired[bool]
     factory: NotRequired[Optional[Type[sqlite3.Connection]]]
     cached_statements: NotRequired[int]

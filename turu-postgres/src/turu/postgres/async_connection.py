@@ -1,5 +1,5 @@
 import os
-from typing import Optional, Type, Union
+from typing import Any, Optional, Type, Union, cast
 
 import psycopg
 import psycopg.abc
@@ -31,7 +31,7 @@ class AsyncConnection(turu.core.async_connection.AsyncConnection):
         **kwargs: Optional[Union[int, str]],
     ) -> Self:
         return cls(
-            await psycopg.AsyncConnection.connect(
+            await cast(Any, psycopg.AsyncConnection.connect)(
                 conninfo,
                 autocommit=autocommit,
                 prepare_threshold=prepare_threshold,
@@ -39,7 +39,7 @@ class AsyncConnection(turu.core.async_connection.AsyncConnection):
                 cursor_factory=cursor_factory,
                 context=context,
                 **kwargs,
-            )  # type: ignore
+            )
         )
 
     @override

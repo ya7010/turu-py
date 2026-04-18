@@ -1,11 +1,10 @@
 import sqlite3
 from typing import (
-    TYPE_CHECKING,
     Any,
     List,
+    Mapping,
     Optional,
     Sequence,
-    Tuple,
     Type,
     cast,
 )
@@ -13,14 +12,13 @@ from typing import (
 import turu.core.cursor
 import turu.core.mock
 import turu.core.tag
-from typing_extensions import Never, override
+from typing_extensions import Never, TypeAlias, override
 
-if TYPE_CHECKING:
-    from sqlite3.dbapi2 import _Parameters
+SQLiteParameters: TypeAlias = Sequence[Any] | Mapping[str, Any]
 
 
 class Cursor(
-    turu.core.cursor.Cursor[turu.core.cursor.GenericRowType, "_Parameters"],
+    turu.core.cursor.Cursor[turu.core.cursor.GenericRowType, SQLiteParameters],
 ):
     def __init__(
         self,
@@ -49,8 +47,8 @@ class Cursor(
 
     @override
     def execute(
-        self, operation: str, parameters: Optional["_Parameters"] = None, /
-    ) -> "Cursor[Tuple[Any]]":
+        self, operation: str, parameters: Optional[SQLiteParameters] = None, /
+    ) -> "Cursor[tuple[Any, ...]]":
         self._raw_cursor.execute(operation, parameters or ())
         self._row_type = None
 
@@ -58,8 +56,8 @@ class Cursor(
 
     @override
     def executemany(
-        self, operation: str, seq_of_parameters: "Sequence[_Parameters]", /
-    ) -> "Cursor[Tuple[Any]]":
+        self, operation: str, seq_of_parameters: Sequence[SQLiteParameters], /
+    ) -> "Cursor[tuple[Any, ...]]":
         self._raw_cursor.executemany(operation, seq_of_parameters)
         self._row_type = None
 
@@ -70,7 +68,7 @@ class Cursor(
         self,
         row_type: Type[turu.core.cursor.GenericNewRowType],
         operation: str,
-        parameters: "Optional[_Parameters]" = None,
+        parameters: Optional[SQLiteParameters] = None,
         /,
     ) -> "Cursor[turu.core.cursor.GenericNewRowType]":
         self._raw_cursor.execute(operation, parameters or ())
@@ -83,7 +81,7 @@ class Cursor(
         self,
         row_type: Type[turu.core.cursor.GenericNewRowType],
         operation: str,
-        seq_of_parameters: "Sequence[_Parameters]",
+        seq_of_parameters: Sequence[SQLiteParameters],
         /,
     ) -> "Cursor[turu.core.cursor.GenericNewRowType]":
         self._raw_cursor.executemany(operation, seq_of_parameters)
@@ -96,7 +94,7 @@ class Cursor(
         self,
         tag: Type[turu.core.tag.Tag],
         operation: str,
-        parameters: "Optional[_Parameters]" = None,
+        parameters: Optional[SQLiteParameters] = None,
     ) -> "Cursor[Never]":
         return cast(Cursor, self.execute(operation, parameters))
 
@@ -105,7 +103,7 @@ class Cursor(
         self,
         tag: Type[turu.core.tag.Tag],
         operation: str,
-        seq_of_parameters: "Sequence[_Parameters]",
+        seq_of_parameters: Sequence[SQLiteParameters],
     ) -> "Cursor[Never]":
         return cast(Cursor, self.executemany(operation, seq_of_parameters))
 

@@ -1,5 +1,5 @@
 import os
-from typing import Optional, Type, Union
+from typing import Any, Optional, Type, Union, cast
 
 import psycopg
 import psycopg.abc
@@ -30,7 +30,7 @@ class Connection(turu.core.connection.Connection):
         **kwargs: Union[None, int, str],
     ) -> Self:
         return cls(
-            psycopg.connect(
+            cast(Any, psycopg.connect)(
                 conninfo,
                 autocommit=autocommit,
                 row_factory=row_factory,
@@ -38,7 +38,7 @@ class Connection(turu.core.connection.Connection):
                 cursor_factory=cursor_factory,
                 context=context,
                 **kwargs,
-            )  # type: ignore
+            )
         )
 
     @override
