@@ -76,6 +76,10 @@ class AsyncCursor(
         self._raw_cursor.close()
 
     @override
+    async def __aenter__(self) -> Self:
+        return self
+
+    @override
     async def execute(
         self,
         operation: str,

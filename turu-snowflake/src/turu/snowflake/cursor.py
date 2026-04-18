@@ -77,6 +77,10 @@ class Cursor(
         self._raw_cursor.close()
 
     @override
+    def __enter__(self) -> Self:
+        return self
+
+    @override
     def execute(
         self,
         operation: str,

@@ -26,7 +26,7 @@ class RecordCursor(  # type: ignore[override]
                 header=self._recorder._options.get("header", True),
             )
 
-        return df
+        return cast(GenericPandasDataFrame, df)
 
     def fetch_pandas_batches(self, **kwargs) -> Iterator[GenericPandasDataFrame]:
         batches = self.__sf_cursor.fetch_pandas_batches(**kwargs)
@@ -34,13 +34,14 @@ class RecordCursor(  # type: ignore[override]
         if isinstance(self._recorder, turu.core.record.CsvRecorder):
             if limit := self._recorder._options.get("limit"):
                 for batch in batches:
-                    yield batch.head(limit)
+                    yield cast(GenericPandasDataFrame, batch.head(limit))
 
                     limit -= len(batch)
                     if limit <= 0:
                         return
 
-        return batches
+        for batch in batches:
+            yield cast(GenericPandasDataFrame, batch)
 
     def fetch_arrow_all(self) -> GenericPyArrowTable:
         table = self.__sf_cursor.fetch_arrow_all()
@@ -55,7 +56,7 @@ class RecordCursor(  # type: ignore[override]
                 header=self._recorder._options.get("header", True),
             )
 
-        return table
+        return cast(GenericPyArrowTable, table)
 
     def fetch_arrow_batches(self) -> Iterator[GenericPyArrowTable]:
         batches = self.__sf_cursor.fetch_arrow_batches()
@@ -63,13 +64,14 @@ class RecordCursor(  # type: ignore[override]
         if isinstance(self._recorder, turu.core.record.CsvRecorder):
             if limit := self._recorder._options.get("limit"):
                 for batch in batches:
-                    yield batch.slice(0, limit)
+                    yield cast(GenericPyArrowTable, batch.slice(0, limit))
 
                     limit -= batch.num_rows
                     if limit <= 0:
                         return
 
-        return batches
+        for batch in batches:
+            yield cast(GenericPyArrowTable, batch)
 
     @property
     def __sf_cursor(

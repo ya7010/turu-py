@@ -79,7 +79,7 @@ class _ConnectParams(TypedDict, total=False):
     collation: Optional[Any]
     sql_mode: Optional[str]
     read_default_file: Optional[str]
-    conv: Dict[int | type[Any], Callable[[Union[str, bytes]], Any]]
+    conv: Dict[Union[int, Type[Any]], Callable[[Union[str, bytes]], Any]]
     use_unicode: bool
     client_flag: int
     cursorclass: Type[Any]

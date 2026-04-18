@@ -1,4 +1,4 @@
-from typing import Any, Mapping, Sequence
+from typing import Any, Mapping, Sequence, Union
 
 import turu.core.cursor
 import turu.core.mock
@@ -6,7 +6,7 @@ from typing_extensions import TypeAlias
 
 from .cursor import Cursor
 
-SQLiteParameters: TypeAlias = Sequence[Any] | Mapping[str, Any]
+SQLiteParameters: TypeAlias = Union[Sequence[Any], Mapping[str, Any]]
 
 
 class MockCursor(  # type: ignore

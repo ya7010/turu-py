@@ -6,6 +6,7 @@ from typing import (
     Optional,
     Sequence,
     Type,
+    Union,
     cast,
 )
 
@@ -14,7 +15,7 @@ import turu.core.mock
 import turu.core.tag
 from typing_extensions import Never, TypeAlias, override
 
-SQLiteParameters: TypeAlias = Sequence[Any] | Mapping[str, Any]
+SQLiteParameters: TypeAlias = Union[Sequence[Any], Mapping[str, Any]]
 
 
 class Cursor(
