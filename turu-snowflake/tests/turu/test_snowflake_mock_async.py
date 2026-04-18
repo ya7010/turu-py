@@ -2,7 +2,7 @@ import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from textwrap import dedent
-from typing import NamedTuple
+from typing import NamedTuple, cast
 
 import pytest
 from typing_extensions import Never
@@ -100,11 +100,12 @@ class TestTuruSnowflakeMockAsyncConnection:
         class RowModel(PanderaDataFrameModel):
             ID: pa.Int8
 
-        _cursor: turu.snowflake.AsyncCursor[
-            Never, PanderaDataFrame[RowModel], Never
-        ] = await mock_async_connection.inject_response(
-            RowModel, pd.DataFrame({"id": [1]})
-        ).execute_map(RowModel, "select 1 as ID")
+        _cursor = cast(
+            turu.snowflake.AsyncCursor[Never, PanderaDataFrame[RowModel], Never],
+            await mock_async_connection.inject_response(
+                RowModel, pd.DataFrame({"id": [1]})
+            ).execute_map(RowModel, "select 1 as ID"),
+        )
 
     @pytest.mark.asyncio
     async def test_execute_map_fetchone(

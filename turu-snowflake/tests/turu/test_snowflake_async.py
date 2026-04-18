@@ -84,9 +84,10 @@ class TestTuruSnowflakeAsyncConnection:
         class RowModel(PanderaDataFrameModel):
             ID: pa.Int8
 
-        _cursor: turu.snowflake.AsyncCursor[
-            Never, PanderaDataFrame[RowModel], Never
-        ] = await async_connection.execute_map(RowModel, "select 1 as ID")
+        _cursor = cast(
+            turu.snowflake.AsyncCursor[Never, PanderaDataFrame[RowModel], Never],
+            await async_connection.execute_map(RowModel, "select 1 as ID"),
+        )
 
     @pytest.mark.asyncio
     async def test_execute_fetchone(self, async_connection: AsyncConnection):

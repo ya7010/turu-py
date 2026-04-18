@@ -2,7 +2,7 @@ import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from textwrap import dedent
-from typing import NamedTuple
+from typing import NamedTuple, cast
 
 import pytest
 from typing_extensions import Never
@@ -88,10 +88,11 @@ class TestTuruSnowflakeMockConnection:
         class RowModel(PanderaDataFrameModel):
             ID: pa.Int8
 
-        _cursor: turu.snowflake.Cursor[Never, PanderaDataFrame[RowModel], Never] = (
+        _cursor = cast(
+            turu.snowflake.Cursor[Never, PanderaDataFrame[RowModel], Never],
             mock_connection.inject_response(
                 RowModel, pd.DataFrame({"id": [1]})
-            ).execute_map(RowModel, "select 1 as ID")
+            ).execute_map(RowModel, "select 1 as ID"),
         )
 
     def test_execute_map_fetchone(self, mock_connection: MockConnection):

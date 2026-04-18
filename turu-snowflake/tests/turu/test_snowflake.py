@@ -81,8 +81,9 @@ class TestTuruSnowflake:
         class RowModel(PanderaDataFrameModel):
             ID: pa.Int8
 
-        _cursor: turu.snowflake.Cursor[Never, PanderaDataFrame[RowModel], Never] = (
-            connection.execute_map(RowModel, "select 1 as ID")
+        _cursor = cast(
+            turu.snowflake.Cursor[Never, PanderaDataFrame[RowModel], Never],
+            connection.execute_map(RowModel, "select 1 as ID"),
         )
 
     def test_execute_map_fetchone(self, connection: Connection):
