@@ -83,9 +83,9 @@ class TestTuruSnowflakeMockConnection:
         import pandas as pd  # type: ignore[import]
         import pandera as pa  # type: ignore[import]
 
-        from turu.snowflake.features import PanderaDataFrame
+        from turu.snowflake.features import PanderaDataFrame, PanderaDataFrameModel
 
-        class RowModel(pa.DataFrameModel):
+        class RowModel(PanderaDataFrameModel):
             ID: pa.Int8
 
         _cursor: turu.snowflake.Cursor[Never, PanderaDataFrame[RowModel], Never] = (
