@@ -80,7 +80,7 @@ optional = true
 [tool.poetry.group.dev.dependencies]
 pytest = ">=7.4.4,<9.0.0"
 taskipy = "^1.12.0"
-pyright = "1.1.408"
+pyright = "1.1.409"
 ruff = ">=0.15.11,<0.16.0"
 pydantic = "^2.13.2"
 pytest-cov = ">=4.1,<8.0"
