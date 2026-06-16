@@ -2242,14 +2242,14 @@ test = ["pretend", "pytest (>=3.0.1)", "pytest-rerunfailures"]
 
 [[package]]
 name = "pyright"
-version = "1.1.408"
+version = "1.1.410"
 description = "Command line wrapper for pyright"
 optional = false
 python-versions = ">=3.7"
 groups = ["dev"]
 files = [
-    {file = "pyright-1.1.408-py3-none-any.whl", hash = "sha256:090b32865f4fdb1e0e6cd82bf5618480d48eecd2eb2e70f960982a3d9a4c17c1"},
-    {file = "pyright-1.1.408.tar.gz", hash = "sha256:f28f2321f96852fa50b5829ea492f6adb0e6954568d1caa3f3af3a5f555eb684"},
+    {file = "pyright-1.1.410-py3-none-any.whl", hash = "sha256:5e961bed37cacf96b3f7cd7b1da39b350a9239aa2e69138d0e88f728cfaf296c"},
+    {file = "pyright-1.1.410.tar.gz", hash = "sha256:07a073b8ba6749826773c1269773efa11b93440d9a6aa60419d9a3172d6dc488"},
 ]
 
 [package.dependencies]
@@ -3017,4 +3017,4 @@ sqlite3 = ["turu-sqlite3"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.9"
-content-hash = "dcc962cb9b5cc2f95ea3ae1b3d5306b5bfcb2c1eff85d62e7e986bef226bf9cc"
+content-hash = "db200aa9d84d20c075d25ea131d8533bdd146d0c21ea07850c61bd3f3ec2cfec"
