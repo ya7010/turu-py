@@ -1,6 +1,6 @@
 .PHONY: install
 install:
-	bash scripts/poetry-install.sh
+	bash scripts/uv-install.sh
 
 .PHONY: ci
 ci:
@@ -26,18 +26,18 @@ test:
 update:
 	bash scripts/update.sh
 
-.PHONY: poetry-install
-poetry-install:
-	bash scripts/poetry-install.sh
+.PHONY: uv-install
+uv-install:
+	bash scripts/uv-install.sh
 
-.PHONY: poetry-update
-poetry-update:
-	bash scripts/poetry-update.sh
+.PHONY: uv-update
+uv-update:
+	bash scripts/uv-update.sh
 
-.PHONY: poetry-lock
-poetry-lock:
-	bash scripts/poetry-lock.sh
+.PHONY: uv-lock
+uv-lock:
+	bash scripts/uv-lock.sh
 
 .PHONY: docs
 docs:
-	poetry run task docs-serve
+	uv run --group docs task docs-serve

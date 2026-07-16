@@ -1,11 +1,11 @@
-[tool.poetry]
+[project]
 name = "turu"
 version = "0.1.0"
 description = "Simple Typed Python Database Client based PEP 249"
-authors = ["yassun7010 <yassun7010@outlook.com>"]
+authors = [{ name = "yassun7010", email = "yassun7010@outlook.com" }]
 readme = "README.md"
-repository = "https://github.com/ya7010/turu-py"
-documentation = "https://ya7010.github.io/turu-py/"
+requires-python = ">=3.9,<4"
+dependencies = ["turu-core>=0.1.0"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Topic :: Software Development :: Libraries",
@@ -18,113 +18,65 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: SQL",
-    "Topic :: Database",
-    "Topic :: Scientific/Engineering :: Information Analysis",
-    "Topic :: Software Development",
-    "Topic :: Software Development :: Libraries",
-    "Topic :: Software Development :: Libraries :: Application Frameworks",
-    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
-[tool.poetry.extras]
-sqlite3 = ["turu-sqlite3"]
-mysql = ["turu-mysql"]
-postgres = ["turu-postgres"]
-snowflake = ["turu-snowflake"]
-bigquery = ["turu-bigquery"]
+[project.urls]
+Repository = "https://github.com/ya7010/turu-py"
+Documentation = "https://ya7010.github.io/turu-py/"
 
-[tool.poetry.dependencies]
-python = "^3.9"
+[project.optional-dependencies]
+sqlite3 = ["turu-sqlite3>=0.1.0"]
+mysql = ["turu-mysql>=0.1.0"]
+postgres = ["turu-postgres>=0.1.0"]
+snowflake = ["turu-snowflake>=0.1.0"]
+bigquery = ["turu-bigquery>=0.1.0"]
 
-[tool.poetry.dependencies.turu-core]
-# INFO: poetry-dynamic-versioning to replace this.
-path = "./turu-core"
-develop = true
-# version = "0.0.0"
-
-[tool.poetry.dependencies.turu-sqlite3]
-# INFO: poetry-dynamic-versioning to replace this.
-path = "./turu-sqlite3"
-develop = true
-# version = "0.0.0"
-optional = true
-
-[tool.poetry.dependencies.turu-mysql]
-# INFO: poetry-dynamic-versioning to replace this.
-path = "./turu-mysql"
-develop = true
-# version = "0.0.0"
-optional = true
-
-[tool.poetry.dependencies.turu-postgres]
-# INFO: poetry-dynamic-versioning to replace this.
-path = "./turu-postgres"
-develop = true
-# version = "0.0.0"
-optional = true
-
-[tool.poetry.dependencies.turu-snowflake]
-# INFO: poetry-dynamic-versioning to replace this.
-path = "./turu-snowflake"
-develop = true
-# version = "0.0.0"
-optional = true
-
-[tool.poetry.dependencies.turu-bigquery]
-# INFO: poetry-dynamic-versioning to replace this.
-path = "./turu-bigquery"
-develop = true
-# version = "0.0.0"
-optional = true
-
-[tool.poetry.group.dev.dependencies]
-pytest = [
-    { version = "^8.4.2", python = "<3.10" },
-    { version = "^9.1.1", python = ">=3.10" },
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2,<9; python_version < '3.10'",
+    "pytest>=9.1.1,<10; python_version >= '3.10'",
+    "taskipy>=1.14.1,<2",
+    "pyright==1.1.411",
+    "ruff>=0.15.21,<0.16",
+    "pydantic>=2.13.4,<3",
+    "pytest-cov>=7.1.0,<8",
+    "pytest-asyncio>=1.2.0,<2; python_version < '3.10'",
+    "pytest-asyncio>=1.4.0,<2; python_version >= '3.10'",
+    "pytest-xdist>=3.8.0,<4",
+    "pandera>=0.26.1; python_version < '3.10'",
+    "pandera>=0.32.1; python_version >= '3.10'",
+    "typing-extensions>=4.16.0,<5",
 ]
-taskipy = "^1.14.1"
-pyright = "1.1.411"
-ruff = "^0.15.21"
-pydantic = "^2.13.4"
-pytest-cov = "^7.1.0"
-pytest-asyncio = [
-    { version = "^1.2.0", python = "<3.10" },
-    { version = "^1.4.0", python = ">=3.10" },
+docs = [
+    "mkdocs>=1.6.1,<2",
+    "mkdocs-material[imaging]>=9.7.6,<10",
+    "mkdocs-plugin-inline-svg>=0.1.0,<0.2",
+    "mkdocs-exclude>=1.0.2,<2",
+    "mkdocstrings[python]>=0.30.1,<0.31; python_version < '3.10'",
+    "mkdocstrings[python]>=1.0.6,<2; python_version >= '3.10'",
+    "griffe>=1.14.0,<2; python_version < '3.10'",
+    "griffe>=2.1.0,<3; python_version >= '3.10'",
+    "griffe-inherited-docstrings>=1.1.2,<2; python_version < '3.10'",
+    "griffe-inherited-docstrings>=1.1.3,<2; python_version >= '3.10'",
+    "mkdocs-awesome-pages-plugin>=2.10.1,<3",
 ]
-pytest-xdist = "^3.8.0"
-pandera = [
-    { version = ">=0.26.1", python = "<3.10" },
-    { version = ">=0.32.1", python = ">=3.10" },
-]
-typing-extensions = "^4.16.0"
 
-[tool.poetry.group.docs.dependencies]
-mkdocs = "^1.6.1"
-mkdocs-material = { extras = ["imaging"], version = "^9.7.6" }
-mkdocs-plugin-inline-svg = "^0.1.0"
-mkdocs-exclude = "^1.0.2"
-mkdocstrings = [
-    { extras = ["python"], version = "^0.30.1", python = "<3.10" },
-    { extras = ["python"], version = "^1.0.6", python = ">=3.10" },
-]
-griffe = [
-    { version = "^1.14.0", python = "<3.10" },
-    { version = "^2.1.0", python = ">=3.10" },
-]
-griffe-inherited-docstrings = [
-    { version = "^1.1.2", python = "<3.10" },
-    { version = "^1.1.3", python = ">=3.10" },
-]
-mkdocs-awesome-pages-plugin = "^2.10.1"
+[tool.uv.sources]
+turu-core = { workspace = true }
+turu-sqlite3 = { workspace = true }
+turu-mysql = { workspace = true }
+turu-postgres = { workspace = true }
+turu-snowflake = { workspace = true }
+turu-bigquery = { workspace = true }
 
-[tool.poetry-dynamic-versioning]
-enable = false
-
-[[tool.poetry-dynamic-versioning.substitution.folders]]
-path = "."
-files = ["pyproject.toml"]
-patterns = [
-    "path = \"\\./turu-[\\w-]+\"\ndevelop = true\n# (version = \"())0\\.0\\.0",
+[tool.uv.workspace]
+members = [
+    "turu-core",
+    "turu-sqlite3",
+    "turu-mysql",
+    "turu-postgres",
+    "turu-snowflake",
+    "turu-bigquery",
 ]
 
 [tool.taskipy.tasks]
@@ -136,7 +88,9 @@ ci = "task format && task lint && task typecheck && task test"
 docs-serve = "mkdocs serve"
 docs-deploy = "mkdocs gh-deploy"
 
-
 [build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0"]
-build-backend = "poetry_dynamic_versioning.backend"
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/turu"]

@@ -21,47 +21,39 @@ jobs:
       matrix:
         python-version: ["3.9", "3.10", "3.11", "3.12"]
         package:
-          - turu-core
-          - turu-sqlite3
-          - turu-mysql
-          - turu-postgres
-          - turu-snowflake
-          - turu-bigquery
-          - .
-        install-flags:
-          - ""
-          - "--all-extras"
-    defaults:
-      run:
-        working-directory: ${{ matrix.package }}
+          - { name: turu-core, path: turu-core }
+          - { name: turu-sqlite3, path: turu-sqlite3 }
+          - { name: turu-mysql, path: turu-mysql }
+          - { name: turu-postgres, path: turu-postgres }
+          - { name: turu-snowflake, path: turu-snowflake }
+          - { name: turu-bigquery, path: turu-bigquery }
+          - { name: turu, path: . }
+        extras: ["", "--all-extras"]
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
+      - name: Install uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
         with:
-          version: 2.2.1
-      - name: Poetry Version
-        run: |
-          poetry --version
-      - name: Poetry Install Dependencies
-        run: |
-          poetry install --no-interaction ${{ matrix.install-flags }}
+          version: "0.11.16"
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --locked --package "${{ matrix.package.name }}" ${{ matrix.extras }}
+      - name: Format
+        working-directory: ${{ matrix.package.path }}
+        run: uv run --locked task format --diff
       - name: Lint
-        run: |
-          poetry run task format --diff
-      - name: Lint
-        run: |
-          poetry run task lint --diff --output-format=github
+        working-directory: ${{ matrix.package.path }}
+        run: uv run --locked task lint --diff --output-format=github
       - name: Typecheck
-        run: |
-          poetry run task typecheck
+        working-directory: ${{ matrix.package.path }}
+        run: uv run --locked task typecheck
       - name: Test
-        run: |
-          poetry run task test
+        working-directory: ${{ matrix.package.path }}
+        run: uv run --locked task test
 
   test:
     if: ${{ always() }}

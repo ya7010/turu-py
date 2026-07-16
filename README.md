@@ -24,6 +24,20 @@
 pip install "turu[snowflake]"
 ```
 
+## Development
+
+Install [uv](https://docs.astral.sh/uv/) and sync every package in the workspace:
+
+```bash
+uv sync --all-packages --all-extras
+```
+
+Run the checks for all packages with:
+
+```bash
+make ci
+```
+
 <!-- --8<-- [start:why_turu] -->
 ## Why Turu?
 SQL is a powerful language, but it has many dialects, and Cloud Native Databases are especially difficult to test automatically in a local environment.

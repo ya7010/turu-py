@@ -2,4 +2,4 @@
 
 set -e
 
-uv lock --upgrade
+uv lock
