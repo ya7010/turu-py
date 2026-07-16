@@ -62,22 +62,15 @@ docs = [
 ]
 
 [tool.uv.sources]
-turu-core = { workspace = true }
-turu-sqlite3 = { workspace = true }
-turu-mysql = { workspace = true }
-turu-postgres = { workspace = true }
-turu-snowflake = { workspace = true }
-turu-bigquery = { workspace = true }
+turu-core.workspace = true
+turu-sqlite3.workspace = true
+turu-mysql.workspace = true
+turu-postgres.workspace = true
+turu-snowflake.workspace = true
+turu-bigquery.workspace = true
 
 [tool.uv.workspace]
-members = [
-    "turu-core",
-    "turu-sqlite3",
-    "turu-mysql",
-    "turu-postgres",
-    "turu-snowflake",
-    "turu-bigquery",
-]
+members = ["turu-*"]
 
 [tool.taskipy.tasks]
 format = "ruff format ."

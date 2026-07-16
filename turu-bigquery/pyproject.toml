@@ -30,7 +30,7 @@ dev = [
 ]
 
 [tool.uv.sources]
-turu-core = { workspace = true }
+turu-core.workspace = true
 
 [tool.taskipy.tasks]
 format = "ruff format ."
