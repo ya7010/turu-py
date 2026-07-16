@@ -2,64 +2,114 @@
 name = "turu"
 version = "0.1.0"
 description = "Simple Typed Python Database Client based PEP 249"
-authors = [{ name = "yassun7010", email = "yassun7010@outlook.com" }]
 readme = "README.md"
 requires-python = ">=3.9,<4"
-dependencies = ["turu-core>=0.1.0"]
+authors = [{ name = "yassun7010", email = "yassun7010@outlook.com" }]
 classifiers = [
-    "Development Status :: 4 - Beta",
-    "Topic :: Software Development :: Libraries",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: SQL",
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: SQL",
+  "Topic :: Software Development :: Libraries",
 ]
+dependencies = ["turu-core>=0.1.0"]
 
 [project.urls]
-Repository = "https://github.com/ya7010/turu-py"
 Documentation = "https://ya7010.github.io/turu-py/"
+Repository = "https://github.com/ya7010/turu-py"
 
 [project.optional-dependencies]
-sqlite3 = ["turu-sqlite3>=0.1.0"]
+bigquery = ["turu-bigquery>=0.1.0"]
 mysql = ["turu-mysql>=0.1.0"]
 postgres = ["turu-postgres>=0.1.0"]
 snowflake = ["turu-snowflake>=0.1.0"]
-bigquery = ["turu-bigquery>=0.1.0"]
+sqlite3 = ["turu-sqlite3>=0.1.0"]
 
 [dependency-groups]
 dev = [
-    "pytest>=8.4.2,<9; python_version < '3.10'",
-    "pytest>=9.1.1,<10; python_version >= '3.10'",
-    "taskipy>=1.14.1,<2",
-    "pyright==1.1.411",
-    "ruff>=0.15.21,<0.16",
-    "pydantic>=2.13.4,<3",
-    "pytest-cov>=7.1.0,<8",
-    "pytest-asyncio>=1.2.0,<2; python_version < '3.10'",
-    "pytest-asyncio>=1.4.0,<2; python_version >= '3.10'",
-    "pytest-xdist>=3.8.0,<4",
-    "pandera>=0.26.1; python_version < '3.10'",
-    "pandera>=0.32.1; python_version >= '3.10'",
-    "typing-extensions>=4.16.0,<5",
+  "pandera>=0.26.1; python_version < '3.10'",
+  "pandera>=0.32.1; python_version >= '3.10'",
+  "pydantic>=2.13.4,<3",
+  "pyright==1.1.411",
+  "pytest>=8.4.2,<9; python_version < '3.10'",
+  "pytest>=9.1.1,<10; python_version >= '3.10'",
+  "pytest-asyncio>=1.2.0,<2; python_version < '3.10'",
+  "pytest-asyncio>=1.4.0,<2; python_version >= '3.10'",
+  "pytest-cov>=7.1.0,<8",
+  "pytest-xdist>=3.8.0,<4",
+  "ruff>=0.15.21,<0.16",
+  "taskipy>=1.14.1,<2",
+  "typing-extensions>=4.16.0,<5",
 ]
 docs = [
-    "mkdocs>=1.6.1,<2",
-    "mkdocs-material[imaging]>=9.7.6,<10",
-    "mkdocs-plugin-inline-svg>=0.1.0,<0.2",
-    "mkdocs-exclude>=1.0.2,<2",
-    "mkdocstrings[python]>=0.30.1,<0.31; python_version < '3.10'",
-    "mkdocstrings[python]>=1.0.6,<2; python_version >= '3.10'",
-    "griffe>=1.14.0,<2; python_version < '3.10'",
-    "griffe>=2.1.0,<3; python_version >= '3.10'",
-    "griffe-inherited-docstrings>=1.1.2,<2; python_version < '3.10'",
-    "griffe-inherited-docstrings>=1.1.3,<2; python_version >= '3.10'",
-    "mkdocs-awesome-pages-plugin>=2.10.1,<3",
+  "griffe>=1.14.0,<2; python_version < '3.10'",
+  "griffe>=2.1.0,<3; python_version >= '3.10'",
+  "griffe-inherited-docstrings>=1.1.2,<2; python_version < '3.10'",
+  "griffe-inherited-docstrings>=1.1.3,<2; python_version >= '3.10'",
+  "mkdocs>=1.6.1,<2",
+  "mkdocs-awesome-pages-plugin>=2.10.1,<3",
+  "mkdocs-exclude>=1.0.2,<2",
+  "mkdocs-material[imaging]>=9.7.6,<10",
+  "mkdocs-plugin-inline-svg>=0.1.0,<0.2",
+  "mkdocstrings[python]>=0.30.1,<0.31; python_version < '3.10'",
+  "mkdocstrings[python]>=1.0.6,<2; python_version >= '3.10'",
 ]
+
+[tool.uv]
+# Keep workspace-wide third-party version constraints in one place. Member
+# projects only declare the dependency names they use.
+constraint-dependencies = [
+  "aiomysql>=0.2.0",
+  "aiosqlite>=0.19.0",
+  "cryptography>=41.0.7",
+  "google-cloud-bigquery>=3.14.1",
+  "google-cloud-bigquery-storage>=2.24.0",
+  "numpy>=2.0.2; python_version < '3.10'",
+  "numpy>=2.2.6; python_version >= '3.10'",
+  "pandas>=2.2.3",
+  "pandas-stubs>=2.2.2.240807; python_version < '3.10'",
+  "pandas-stubs>=2.3.3.260113; python_version >= '3.10' and python_version < '3.11'",
+  "pandas-stubs>=3.0.3.260530; python_version >= '3.11'",
+  "pandera>=0.26.1; python_version < '3.10'",
+  "pandera>=0.32.1; python_version >= '3.10'",
+  "psycopg>=3.1.16",
+  "pyarrow>=18.0.0",
+  "pyarrow-stubs>=20.0.0.20260625,<21",
+  "pydantic>=2.13.4,<3",
+  "pyright==1.1.411",
+  "pytest>=8.4.2,<9; python_version < '3.10'",
+  "pytest>=9.1.1,<10; python_version >= '3.10'",
+  "pytest-asyncio>=1.2.0,<2; python_version < '3.10'",
+  "pytest-asyncio>=1.4.0,<2; python_version >= '3.10'",
+  "pytest-cov>=7.1.0,<8",
+  "pytest-xdist>=3.8.0,<4",
+  "ruff>=0.15.21,<0.16",
+  "snowflake-connector-python>=3.6.0",
+  "taskipy>=1.14.1,<2",
+  "typing-extensions>=4.16.0,<5",
+]
+
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/turu"]
+
+[tool.taskipy.tasks]
+ci = "task format && task lint && task typecheck && task test"
+docs-deploy = "mkdocs gh-deploy"
+docs-serve = "mkdocs serve"
+format = "ruff format ."
+lint = "ruff check ."
+test = "pytest ./tests -n auto --cov=src --cov-report=term --cov-report=xml"
+typecheck = "pyright src/** tests/**"
 
 [tool.uv.sources]
 turu-core.workspace = true
@@ -71,19 +121,3 @@ turu-bigquery.workspace = true
 
 [tool.uv.workspace]
 members = ["turu-*"]
-
-[tool.taskipy.tasks]
-format = "ruff format ."
-lint = "ruff check ."
-typecheck = "pyright src/** tests/**"
-test = "pytest ./tests -n auto --cov=src --cov-report=term --cov-report=xml"
-ci = "task format && task lint && task typecheck && task test"
-docs-serve = "mkdocs serve"
-docs-deploy = "mkdocs gh-deploy"
-
-[build-system]
-requires = ["hatchling>=1.27,<2"]
-build-backend = "hatchling.build"
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/turu"]

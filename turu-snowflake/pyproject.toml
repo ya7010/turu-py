@@ -2,51 +2,47 @@
 name = "turu-snowflake"
 version = "0.1.0"
 description = "Snowflake adapter for turu"
-authors = [{ name = "yassun7010", email = "yassun7010@outlook.com" }]
 readme = "README.md"
 requires-python = ">=3.9,<4"
-dependencies = [
-    "typing-extensions>=4.9.0", "snowflake-connector-python>=3.6.0", "turu-core>=0.1.0",
-]
+authors = [{ name = "yassun7010", email = "yassun7010@outlook.com" }]
 classifiers = [
-    "Development Status :: 4 - Beta", "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3", "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12", "Programming Language :: Python :: 3 :: Only", "Topic :: Database",
+  "Development Status :: 4 - Beta",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Database",
+]
+dependencies = [
+  "snowflake-connector-python",
+  "turu-core",
+  "typing-extensions",
 ]
 
 [project.urls]
 Repository = "https://github.com/ya7010/turu-py"
 
 [project.optional-dependencies]
-pandas = ["pandas>=2.2.3", "pyarrow>=18.0.0"]
-pandera = ["pandera>=0.26.1; python_version < '3.10'", "pandera>=0.31.1; python_version >= '3.10'"]
+pandas = ["pandas", "pyarrow"]
+pandera = ["pandera"]
 
 [dependency-groups]
 dev = [
-    "taskipy>=1.14.1,<2", "pyright==1.1.411", "ruff>=0.15.21,<0.16",
-    "pytest>=8.4.2,<9; python_version < '3.10'", "pytest>=9.1.1,<10; python_version >= '3.10'",
-    "pydantic>=2.13.4,<3", "pytest-xdist>=3.8.0,<4", "pytest-cov>=7.1.0,<8",
-    "pytest-asyncio>=1.2.0,<2; python_version < '3.10'", "pytest-asyncio>=1.4.0,<2; python_version >= '3.10'",
-    "pyarrow-stubs>=20.0.0.20260625,<21",
-    "pandas-stubs>=2.2.2.240807; python_version < '3.10'",
-    "pandas-stubs>=2.3.3.260113; python_version >= '3.10' and python_version < '3.11'",
-    "pandas-stubs>=3.0.3.260530; python_version >= '3.11'",
-    "numpy>=2.0.2; python_version < '3.10'", "numpy>=2.2.6; python_version >= '3.10'",
+  "numpy",
+  "pandas-stubs",
+  "pyarrow-stubs",
+  "pydantic",
+  "pyright",
+  "pytest",
+  "pytest-asyncio",
+  "pytest-cov",
+  "pytest-xdist",
+  "ruff",
+  "taskipy",
 ]
-
-[tool.uv.sources]
-turu-core.workspace = true
-
-[tool.taskipy.tasks]
-format = "ruff format ."
-lint = "ruff check ."
-typecheck = "pyright src/** tests/**"
-test = "pytest -n auto --cov=src --cov-report=term --cov-report=xml tests"
-ci = "task format && task lint && task typecheck && task test"
-
-[tool.pyright]
-reportOverlappingOverload = "none"
 
 [build-system]
 requires = ["hatchling>=1.27,<2"]
@@ -54,3 +50,16 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/turu"]
+
+[tool.pyright]
+reportOverlappingOverload = "none"
+
+[tool.taskipy.tasks]
+ci = "task format && task lint && task typecheck && task test"
+format = "ruff format ."
+lint = "ruff check ."
+test = "pytest -n auto --cov=src --cov-report=term --cov-report=xml tests"
+typecheck = "pyright src/** tests/**"
+
+[tool.uv.sources]
+turu-core.workspace = true
