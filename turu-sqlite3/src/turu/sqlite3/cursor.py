@@ -145,4 +145,4 @@ class Cursor(
             return turu.core.cursor.map_row(self._row_type, next_row)
 
         else:
-            return next_row
+            return cast(turu.core.cursor.GenericRowType, next_row)
