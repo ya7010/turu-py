@@ -19,35 +19,7 @@ classifiers = [
   "Topic :: Software Development :: Libraries",
 ]
 dependencies = [
-  "aiomysql>=0.2.0",
-  "aiosqlite>=0.19.0",
-  "cryptography>=41.0.7",
-  "google-cloud-bigquery>=3.14.1",
-  "google-cloud-bigquery-storage>=2.24.0",
-  "numpy>=2.0.2; python_version < '3.10'",
-  "numpy>=2.2.6; python_version >= '3.10'",
-  "pandas>=2.2.3",
-  "pandas-stubs>=2.2.2.240807; python_version < '3.10'",
-  "pandas-stubs>=2.3.3.260113; python_version >= '3.10' and python_version < '3.11'",
-  "pandas-stubs>=3.0.3.260530; python_version >= '3.11'",
-  "pandera>=0.26.1; python_version < '3.10'",
-  "pandera>=0.32.1; python_version >= '3.10'",
-  "psycopg>=3.1.16",
-  "pyarrow>=18.0.0",
-  "pyarrow-stubs>=20.0.0.20260625,<21",
-  "pydantic>=2.13.4,<3",
-  "pyright==1.1.411",
-  "pytest>=8.4.2,<9; python_version < '3.10'",
-  "pytest>=9.1.1,<10; python_version >= '3.10'",
-  "pytest-asyncio>=1.2.0,<2; python_version < '3.10'",
-  "pytest-asyncio>=1.4.0,<2; python_version >= '3.10'",
-  "pytest-cov>=7.1.0,<8",
-  "pytest-xdist>=3.8.0,<4",
-  "ruff>=0.15.21,<0.16",
-  "snowflake-connector-python>=3.6.0",
-  "taskipy>=1.14.1,<2",
   "turu-core>=0.1.0",
-  "typing-extensions>=4.16.0,<5",
 ]
 
 [project.urls]
@@ -106,6 +78,41 @@ format = "ruff format ."
 lint = "ruff check ."
 test = "pytest ./tests -n auto --cov=src --cov-report=term --cov-report=xml"
 typecheck = "pyright src/** tests/**"
+
+[tool.uv]
+# Centralized third-party version constraints for the whole workspace.
+# These constrain resolution/the shared lockfile without becoming runtime
+# dependencies of the published `turu` package.
+constraint-dependencies = [
+  "aiomysql>=0.2.0",
+  "aiosqlite>=0.19.0",
+  "cryptography>=41.0.7",
+  "google-cloud-bigquery>=3.14.1",
+  "google-cloud-bigquery-storage>=2.24.0",
+  "numpy>=2.0.2; python_version < '3.10'",
+  "numpy>=2.2.6; python_version >= '3.10'",
+  "pandas>=2.2.3",
+  "pandas-stubs>=2.2.2.240807; python_version < '3.10'",
+  "pandas-stubs>=2.3.3.260113; python_version >= '3.10' and python_version < '3.11'",
+  "pandas-stubs>=3.0.3.260530; python_version >= '3.11'",
+  "pandera>=0.26.1; python_version < '3.10'",
+  "pandera>=0.32.1; python_version >= '3.10'",
+  "psycopg>=3.1.16",
+  "pyarrow>=18.0.0",
+  "pyarrow-stubs>=20.0.0.20260625,<21",
+  "pydantic>=2.13.4,<3",
+  "pyright==1.1.411",
+  "pytest>=8.4.2,<9; python_version < '3.10'",
+  "pytest>=9.1.1,<10; python_version >= '3.10'",
+  "pytest-asyncio>=1.2.0,<2; python_version < '3.10'",
+  "pytest-asyncio>=1.4.0,<2; python_version >= '3.10'",
+  "pytest-cov>=7.1.0,<8",
+  "pytest-xdist>=3.8.0,<4",
+  "ruff>=0.15.21,<0.16",
+  "snowflake-connector-python>=3.6.0",
+  "taskipy>=1.14.1,<2",
+  "typing-extensions>=4.16.0,<5",
+]
 
 [tool.uv.sources]
 turu-core.workspace = true

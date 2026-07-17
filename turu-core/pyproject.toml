@@ -16,13 +16,13 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Topic :: Software Development :: Libraries",
 ]
-dependencies = ["typing-extensions"]
+dependencies = ["typing-extensions>=4.16.0,<5"]
 
 [project.urls]
 Repository = "https://github.com/ya7010/turu-py"
 
 [project.optional-dependencies]
-pydantic = ["pydantic"]
+pydantic = ["pydantic>=2.13.4,<3"]
 
 [dependency-groups]
 dev = [

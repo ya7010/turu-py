@@ -17,17 +17,20 @@ classifiers = [
   "Topic :: Database",
 ]
 dependencies = [
-  "snowflake-connector-python",
-  "turu-core",
-  "typing-extensions",
+  "snowflake-connector-python>=3.6.0",
+  "turu-core>=0.1.0",
+  "typing-extensions>=4.16.0,<5",
 ]
 
 [project.urls]
 Repository = "https://github.com/ya7010/turu-py"
 
 [project.optional-dependencies]
-pandas = ["pandas", "pyarrow"]
-pandera = ["pandera"]
+pandas = ["pandas>=2.2.3", "pyarrow>=18.0.0"]
+pandera = [
+  "pandera>=0.26.1; python_version < '3.10'",
+  "pandera>=0.32.1; python_version >= '3.10'",
+]
 
 [dependency-groups]
 dev = [

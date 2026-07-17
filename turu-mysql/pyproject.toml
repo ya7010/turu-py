@@ -17,10 +17,10 @@ classifiers = [
   "Topic :: Database",
 ]
 dependencies = [
-  "aiomysql",
-  "cryptography",
-  "turu-core",
-  "typing-extensions"
+  "aiomysql>=0.2.0",
+  "cryptography>=41.0.7",
+  "turu-core>=0.1.0",
+  "typing-extensions>=4.16.0,<5",
 ]
 
 [project.urls]

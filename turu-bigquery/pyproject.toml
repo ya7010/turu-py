@@ -17,17 +17,17 @@ classifiers = [
   "Topic :: Database",
 ]
 dependencies = [
-  "google-cloud-bigquery",
-  "pyarrow",
-  "turu-core",
-  "typing-extensions",
+  "google-cloud-bigquery>=3.14.1",
+  "pyarrow>=18.0.0",
+  "turu-core>=0.1.0",
+  "typing-extensions>=4.16.0,<5",
 ]
 
 [project.urls]
 Repository = "https://github.com/ya7010/turu-py"
 
 [project.optional-dependencies]
-bigquery-storage = ["google-cloud-bigquery-storage"]
+bigquery-storage = ["google-cloud-bigquery-storage>=2.24.0"]
 
 [dependency-groups]
 dev = [
