@@ -2,8 +2,8 @@ name: publish pypi
 description: "Publish to PyPI"
 
 inputs:
-  working-directory:
-    description: "working-directory of package-lock.json"
+  package:
+    description: "Workspace package to publish"
     required: true
   pypi-token:
     description: "PyPI token"
@@ -12,21 +12,18 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/setup-python@v6
-    - uses: snok/install-poetry@v1
+    - name: Install uv
+      uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
       with:
-        version: 2.2.1
-    - name: Check Poetry Version
+        version: "0.11.16"
+    - name: Set release version
       shell: bash
-      run: poetry --version
-    - name: Install Poetry Dynamic Versioning
+      run: bash scripts/set-version.sh "${{ github.event.inputs.version || github.ref_name }}"
+    - name: Build
       shell: bash
-      run: poetry self add "poetry-dynamic-versioning[plugin]"
-    - name: Poetry Publish
+      run: uv build --package "${{ inputs.package }}" --out-dir "dist/${{ inputs.package }}"
+    - name: Publish
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
-      run: |
-        poetry dynamic-versioning enable
-        poetry dynamic-versioning
-        poetry config pypi-token.pypi ${{ inputs.pypi-token }}
-        poetry publish --build
+      env:
+        UV_PUBLISH_TOKEN: ${{ inputs.pypi-token }}
+      run: uv publish "dist/${{ inputs.package }}/*"

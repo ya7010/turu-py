@@ -1,87 +1,66 @@
-[tool.poetry]
+[project]
 name = "turu-bigquery"
 version = "0.1.0"
-description = "bigquery adapter for turu"
-authors = ["yassun7010 <yassun7010@outlook.com>"]
+description = "BigQuery adapter for turu"
 readme = "README.md"
-packages = [{ include = "turu", from = "src" }]
-repository = "https://github.com/ya7010/turu-py"
+requires-python = ">=3.9,<4"
+authors = [{ name = "yassun7010", email = "yassun7010@outlook.com" }]
 classifiers = [
-    "Development Status :: 4 - Beta",
-    "Topic :: Software Development :: Libraries",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: SQL",
-    "Topic :: Database",
-    "Topic :: Scientific/Engineering :: Information Analysis",
-    "Topic :: Software Development",
-    "Topic :: Software Development :: Libraries",
-    "Topic :: Software Development :: Libraries :: Application Frameworks",
-    "Topic :: Software Development :: Libraries :: Python Modules",
+  "Development Status :: 4 - Beta",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Database",
+]
+dependencies = [
+  "google-cloud-bigquery>=3.14.1",
+  "pyarrow>=18.0.0",
+  "turu-core>=0.1.0",
+  "typing-extensions>=4.16.0,<5",
 ]
 
-[tool.poetry.extras]
-bigquery-storage = ["google-cloud-bigquery-storage"]
+[project.urls]
+Repository = "https://github.com/ya7010/turu-py"
 
-[tool.poetry.group.dev.dependencies]
-taskipy = "^1.14.1"
-pyright = "1.1.411"
-ruff = "^0.15.21"
-pytest = [
-    { version = "^8.4.2", python = "<3.10" },
-    { version = "^9.1.1", python = ">=3.10" },
-]
-pydantic = "^2.13.4"
-pytest-xdist = "^3.8.0"
-pytest-cov = "^7.1.0"
-numpy = [
-    { version = ">=2.0.2", python = "<3.10" },
-    { version = ">=2.2.6", python = ">=3.10" },
-]
+[project.optional-dependencies]
+bigquery-storage = ["google-cloud-bigquery-storage>=2.24.0"]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-typing-extensions = ">=4.8.0"
-google-cloud-bigquery = ">=3.14.1"
-google-cloud-bigquery-storage = { version = ">=2.24.0", optional = true }
-pyarrow = ">=18.0.0"
-
-[tool.poetry.dependencies.turu-core]
-# INFO: poetry-dynamic-versioning to replace this.
-path = "../turu-core"
-develop = true
-# version = "0.0.0"
-
-[tool.poetry-dynamic-versioning]
-enable = false
-
-[[tool.poetry-dynamic-versioning.substitution.folders]]
-path = "."
-files = ["pyproject.toml"]
-patterns = [
-    "path = \"\\.\\./turu-[\\w-]+\"\ndevelop = true\n# (version = \"())0\\.0\\.0",
-]
-
-[tool.taskipy.tasks]
-format = "ruff format ."
-lint = "ruff check ."
-typecheck = "pyright src/** tests/**"
-test = "pytest -n auto --cov=src --cov-report=term --cov-report=xml"
-ci = "task format && task lint && task typecheck && task test"
-
-[tool.pytest.ini_options]
-filterwarnings = [
-    "ignore::DeprecationWarning:tests",
-    "ignore::UserWarning:google.cloud.bigquery",
-    "ignore::DeprecationWarning:google.cloud.bigquery",
+[dependency-groups]
+dev = [
+  "numpy",
+  "pydantic",
+  "pyright",
+  "pytest",
+  "pytest-cov",
+  "pytest-xdist",
+  "ruff",
+  "taskipy",
 ]
 
 [build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0"]
-build-backend = "poetry_dynamic_versioning.backend"
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/turu"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+  "ignore::DeprecationWarning:tests",
+  "ignore::UserWarning:google.cloud.bigquery",
+  "ignore::DeprecationWarning:google.cloud.bigquery",
+]
+
+[tool.taskipy.tasks]
+ci = "task format && task lint && task typecheck && task test"
+format = "ruff format ."
+lint = "ruff check ."
+test = "pytest -n auto --cov=src --cov-report=term --cov-report=xml"
+typecheck = "pyright src/** tests/**"
+
+[tool.uv.sources]
+turu-core.workspace = true
