@@ -45,7 +45,7 @@ dev = [
   "pytest-asyncio>=1.4.0,<2; python_version >= '3.10'",
   "pytest-cov>=7.1.0,<8",
   "pytest-xdist>=3.8.0,<4",
-  "ruff>=0.15.21,<0.16",
+  "ruff>=0.15.21,<0.17",
   "taskipy>=1.14.1,<2",
   "typing-extensions>=4.16.0,<5",
 ]
@@ -108,7 +108,7 @@ constraint-dependencies = [
   "pytest-asyncio>=1.4.0,<2; python_version >= '3.10'",
   "pytest-cov>=7.1.0,<8",
   "pytest-xdist>=3.8.0,<4",
-  "ruff>=0.15.21,<0.16",
+  "ruff>=0.15.21,<0.17",
   "snowflake-connector-python>=3.6.0",
   "taskipy>=1.14.1,<2",
   "typing-extensions>=4.16.0,<5",
